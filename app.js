@@ -2,6 +2,9 @@
 //dispatch them to corresponding behaviours
 const express = require('express');
 
+//Use chalk to add colours on the console
+const chalk = require('chalk');
+
 //to access form data
 let bodyParser = require('body-parser');
 
@@ -59,11 +62,11 @@ const infoLogger = loggers.get('infoLogger');
 const connectDb = async () => {
     await mongoose.connect('mongodb://localhost:27017/todo', {useNewUrlParser: true, useUnifiedTopology : true}).then(
         () => {
-            console.log(`Connected to database`)
+            console.log(chalk.green(`Connected to database`))
             infoLogger.info("Connected to database");
         },
         error => {
-            console.error(`Connection error: ${error.stack}`)
+            console.error(chalk.red(`Connection error: ${error.stack}`))
             process.exit(1)
         }
     )
@@ -72,9 +75,21 @@ const connectDb = async () => {
 connectDb().catch(error => console.error(error))
 
 //Accessing the routes for the user
-const todoRoutes = require('./routes/todo')
+const shopRoutes = require('./routes/shop')
 //Acces the routes 
-app.use(todoRoutes)
+app.use(shopRoutes)
+
+const categoryRoutes = require('./routes/category')
+app.use(categoryRoutes)
+
+const productRoutes = require('./routes/product')
+app.use(productRoutes)
+
+//Acces the routes 
+app.use('/api/v1/', shopRoutes);
+app.use('/api/v1/', categoryRoutes);
+app.use('/api/v1/', productRoutes);
+
 
 //When there is no route that caught the incoming request
 //use the 404 middleware
@@ -87,4 +102,4 @@ app.listen(3000, () => {
 });
 
 //Print out where the server is
-console.log("Server is running on port: 3000");
+console.log(chalk.green("Server is running on port: 3000"));
