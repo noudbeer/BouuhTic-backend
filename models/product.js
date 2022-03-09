@@ -4,10 +4,8 @@ var Schema = mongoose.Schema;
 
 var ProductSchema = new Schema({
     title : String,
-    category : Category,
-    shop : Shop,
     description : String,
-    quantity : int,
+    quantity : Number,
     createdAt : {
         type : Date,
         default : Date.now
