@@ -1,28 +1,39 @@
 //Access the router on Express 
 const router = require('express').Router();
 
+const controller = require('../controllers/category');
+
 //CREATE
 router.post("/category", (req, res) => {
-    res.json({"msg": "Create a category"});
+    controller.create(req, res);
 });
 
 //READ
 router.get("/categories", (req, res) => {
-    res.json({"msg": "Read all the categories"});
+    controller.reads(req, res);
 });
 
-router.get("/category", (req, res) => {
-    res.json({"msg": "Read a category"});
+router.get("/category/:id", (req, res) => {
+    controller.read(req, res);
 });
 
 //UPDATE
-router.put("/category", (req, res) => {
-    res.json({"msg": "Update a category"});
+router.put("/category/:id", (req, res) => {
+    controller.update(req, res);
 });
 
 //DELETE
-router.delete("/category", (req, res) => {
-    res.json({"msg": "Delete a category"});
+router.delete("/category/;id", (req, res) => {
+    controller.delete(req, res);
+});
+
+//COMPLETED
+router.post("/category/:id/done", (req, res) => {
+    controller.done(req, res);
+});
+
+router.post("/category/:id/undone", (req, res) => {
+    controller.undone(req, res);
 });
 
 module.exports = router;

@@ -1,28 +1,39 @@
 //Access the router on Express 
 const router = require('express').Router();
 
+const controller = require('../controllers/shop');
+
 //CREATE
 router.post("/shop", (req, res) => {
-    res.json({"msg": "Create a shop"});
+    controller.create(req, res);
 });
 
 //READ
 router.get("/shops", (req, res) => {
-    res.json({"msg": "Read all the shops"});
+    controller.reads(req, res);
 });
 
-router.get("/shop", (req, res) => {
-    res.json({"msg": "Read a shop"});
+router.get("/shop/:id", (req, res) => {
+    controller.read(req, res);
 });
 
 //UPDATE
-router.put("/shop", (req, res) => {
-    res.json({"msg": "Update a shop"});
+router.put("/shop/:id", (req, res) => {
+    controller.update(req, res);
 });
 
 //DELETE
-router.delete("/shop", (req, res) => {
-    res.json({"msg": "Delete a shop"});
+router.delete("/shop/:id", (req, res) => {
+    controller.delete(req, res);
+});
+
+//COMPLETED
+router.post("/shop/:id/done", (req, res) => {
+    controller.done(req, res);
+});
+
+router.post("/shop/:id/undone", (req, res) => {
+    controller.undone(req, res);
 });
 
 module.exports = router;

@@ -1,3 +1,8 @@
+/*
+    Démarrer MongoDB : docker container start mongodb
+*/
+
+
 //Use Express middleware to manage incoming requests and 
 //dispatch them to corresponding behaviours
 const express = require('express');
@@ -76,14 +81,8 @@ connectDb().catch(error => console.error(error))
 
 //Accessing the routes for the user
 const shopRoutes = require('./routes/shop')
-//Acces the routes 
-app.use(shopRoutes)
-
 const categoryRoutes = require('./routes/category')
-app.use(categoryRoutes)
-
 const productRoutes = require('./routes/product')
-app.use(productRoutes)
 
 //Acces the routes 
 app.use('/api/v1/', shopRoutes);

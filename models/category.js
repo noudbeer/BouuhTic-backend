@@ -5,7 +5,6 @@ var Schema = mongoose.Schema;
 var CategorySchema = new Schema({
     title : String,
     description : String,
-    product : [Product],
     createdAt : {
         type : Date,
         default : Date.now
