@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var ProductSchema = new Schema({
     title : String,
     description : String,
+    category_id : {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},
     quantity : Number,
     createdAt : {
         type : Date,

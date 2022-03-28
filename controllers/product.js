@@ -1,9 +1,10 @@
 function createProduct(req, res) {
-    let Product = require('../models/product');
+    let Product = require('../models/Product');
     let newProduct = Product ({
         title: req.body.title,
         description : req.body.description, 
-        quantity : req.body.quantity
+        quantity : req.body.quantity,
+        category_id : req.body.category_id
     });
   
     newProduct.save()
@@ -28,8 +29,19 @@ function readProducts(req, res) {
     });
  }
 
+function readProductsCategory(req, res) {
+    let Product = require("../models/Product");
+
+    Product.find({"category_id": req.params.id})
+    .then((products) => {
+        res.status(200).json(products);
+    }, (err) => {
+        res.status(500).json(err);
+    });
+}
+
 function readProduct(req, res) {
-    let Product = require("../models/product");
+    let Product = require("../models/Product");
 
     Product.findById({_id : req.params.id})
     .then((product) => {
@@ -40,12 +52,15 @@ function readProduct(req, res) {
  }
 
 function updateProduct(req, res) {
-    let Product = require("../models/product");
+    let Product = require("../models/Product");
 
     Product.findByIdAndUpdate({_id: req.params.id}, 
-        {title : req.body.title, 
-        description : req.body.description, 
-        quantity  : req.body.quuantity}, 
+        {
+            title : req.body.title, 
+            description : req.body.description, 
+            quantity  : req.body.quantity,
+            category_id : req.body.category_id
+        }, 
         {new : true})
     .then((updatedProduct) => {
         res.status(200).json(updatedProduct);
@@ -55,7 +70,7 @@ function updateProduct(req, res) {
 }
 
 function deleteProduct(req, res) {
-    let Product = require("../models/product");
+    let Product = require("../models/Product");
 
     Product.findOneAndRemove({_id : req.params.id})
     .then((deletedProduct) => {
@@ -66,7 +81,7 @@ function deleteProduct(req, res) {
  }
 
 function done(req, res) {
-    let Product = require("../models/product");
+    let Product = require("../models/Product");
 
     Product.findByIdAndUpdate({_id: req.params.id}, 
         {done : true}, 
@@ -79,7 +94,7 @@ function done(req, res) {
 }
 
 function undone(req, res) {
-    let Product = require("../models/product");
+    let Product = require("../models/Product");
 
     Product.findByIdAndUpdate({_id: req.params.id}, 
         {done : false}, 
@@ -92,7 +107,8 @@ function undone(req, res) {
 }
 
 module.exports.create = createProduct;
-module.exports.reads = readProducts;
+module.exports.readsAll = readProducts;
+module.exports.reads = readProductsCategory;
 module.exports.read = readProduct;
 module.exports.delete = deleteProduct;
 module.exports.update = updateProduct;

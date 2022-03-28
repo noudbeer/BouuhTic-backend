@@ -10,6 +10,10 @@ router.post("/category", (req, res) => {
 
 //READ
 router.get("/categories", (req, res) => {
+    controller.readsAll(req, res);
+});
+
+router.get("/shop/:id/categories", (req, res) => {
     controller.reads(req, res);
 });
 
@@ -23,7 +27,7 @@ router.put("/category/:id", (req, res) => {
 });
 
 //DELETE
-router.delete("/category/;id", (req, res) => {
+router.delete("/category/:id", (req, res) => {
     controller.delete(req, res);
 });
 

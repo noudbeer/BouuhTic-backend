@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var CategorySchema = new Schema({
     title : String,
     description : String,
-    product : [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
+    shop_id : {type: mongoose.Schema.Types.ObjectId, ref: 'Shop'},
     createdAt : {
         type : Date,
         default : Date.now

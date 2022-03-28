@@ -1,9 +1,9 @@
 function createCategory(req, res) {
-    let Category = require('../models/category');
+    let Category = require('../models/Category');
     let newCategory = Category ({
         title: req.body.title,
         description : req.body.description, 
-        product : req.body.product
+        shop_id : req.body.shop_id
     });
   
     newCategory.save()
@@ -14,24 +14,35 @@ function createCategory(req, res) {
     }, (err) => {
         res.status(400).json(err)
     });
-
 }
 
-function readCategorys(req, res) {
-    let Category = require("../models/category");
+function readCategories(req, res) {
+    let Category = require("../models/Category");
 
     Category.find({})
-    .then((categorys) => {
-        res.status(200).json(categorys);
+    .then((categories) => {
+        res.status(200).json(categories);
     }, (err) => {
         res.status(500).json(err);
     });
  }
 
-function readCategory(req, res) {
-    let Category = require("../models/category");
+function readCategoriesShop(req, res) {
+    let shop     = require("../models/Shop");
+    let category = require("../models/Category");
 
-    Category.findById({_id : req.params.id})
+    category.find({"shop_id": req.params.id})
+    .then((categories) => {
+        res.status(200).json(categories);
+    }, (err) => {
+        res.status(500).json(err);
+    });
+}
+
+function readCategory(req, res) {
+    let category = require("../models/Category");
+
+    category.findById({_id : req.params.id})
     .then((category) => {
         res.status(200).json(category);
     }, (err) => {
@@ -40,9 +51,9 @@ function readCategory(req, res) {
  }
 
 function updateCategory(req, res) {
-    let Category = require("../models/category");
+    let category = require("../models/Category");
 
-    Category.findByIdAndUpdate({_id: req.params.id}, 
+    category.findByIdAndUpdate({_id: req.params.id}, 
         {title: req.body.title,
         description : req.body.description, 
         product : req.body.product}, 
@@ -55,9 +66,9 @@ function updateCategory(req, res) {
 }
 
 function deleteCategory(req, res) {
-    let Category = require("../models/category");
+    let category = require("../models/Category");
 
-    Category.findOneAndRemove({_id : req.params.id})
+    category.findOneAndRemove({_id : req.params.id})
     .then((deletedCategory) => {
         res.status(200).json(deletedCategory);
     }, (err) => {
@@ -66,9 +77,9 @@ function deleteCategory(req, res) {
  }
 
 function done(req, res) {
-    let Category = require("../models/category");
+    let category = require("../models/Category");
 
-    Category.findByIdAndUpdate({_id: req.params.id}, 
+    category.findByIdAndUpdate({_id: req.params.id}, 
         {done : true}, 
         {new : true})
     .then((updatedCategory) => {
@@ -79,9 +90,9 @@ function done(req, res) {
 }
 
 function undone(req, res) {
-    let Category = require("../models/category");
+    let category = require("../models/Category");
 
-    Category.findByIdAndUpdate({_id: req.params.id}, 
+    category.findByIdAndUpdate({_id: req.params.id}, 
         {done : false}, 
         {new : true})
     .then((updatedCategory) => {
@@ -92,7 +103,8 @@ function undone(req, res) {
 }
 
 module.exports.create = createCategory;
-module.exports.reads = readCategorys;
+module.exports.readsAll = readCategories;
+module.exports.reads = readCategoriesShop;
 module.exports.read = readCategory;
 module.exports.delete = deleteCategory;
 module.exports.update = updateCategory;

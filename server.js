@@ -7,6 +7,8 @@
 //dispatch them to corresponding behaviours
 const express = require('express');
 
+const cors = require('cors');
+
 //Use chalk to add colours on the console
 const chalk = require('chalk');
 
@@ -31,6 +33,8 @@ const mongoose = require('mongoose');
 
 //Create an application 
 const app = express();
+
+app.use(cors());
 
 //used to fetch the data from forms on HTTP POST, and PUT
 app.use(bodyParser.urlencoded({
@@ -65,7 +69,7 @@ const infoLogger = loggers.get('infoLogger');
 
 //Connecting to MongoDB (async/await approach)
 const connectDb = async () => {
-    await mongoose.connect('mongodb://localhost:27017/todo', {useNewUrlParser: true, useUnifiedTopology : true}).then(
+    await mongoose.connect('mongodb://localhost:27017/bouuhtic', {useNewUrlParser: true, useUnifiedTopology : true}).then(
         () => {
             console.log(chalk.green(`Connected to database`))
             infoLogger.info("Connected to database");

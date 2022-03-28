@@ -10,6 +10,10 @@ router.post("/product", (req, res) => {
 
 //READ
 router.get("/products", (req, res) => {
+    controller.readsAll(req, res);
+});
+
+router.get("/category/:id/products", (req, res) => {
     controller.reads(req, res);
 });
 
@@ -19,7 +23,7 @@ router.get("/product/:id", (req, res) => {
 
 //UPDATE
 router.put("/product/:id", (req, res) => {
-    controller.delete(req, res);
+    controller.update(req, res);
 });
 
 //DELETE

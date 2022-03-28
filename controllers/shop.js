@@ -1,8 +1,8 @@
 function createShop(req, res) {
-    let Shop = require('../models/shop');
+    let Shop = require('../models/Shop');
+    console.log(req)
     let newShop = Shop ({
         name: req.body.name,
-        category : req.body.category
     });
   
     newShop.save()
@@ -17,7 +17,7 @@ function createShop(req, res) {
 }
 
 function readShops(req, res) {
-    let Shop = require("../models/shop");
+    let Shop = require("../models/Shop");
 
     Shop.find({})
     .then((shops) => {
@@ -28,7 +28,7 @@ function readShops(req, res) {
  }
 
 function readShop(req, res) {
-    let Shop = require("../models/shop");
+    let Shop = require("../models/Shop");
 
     Shop.findById({_id : req.params.id})
     .then((shop) => {
@@ -39,11 +39,10 @@ function readShop(req, res) {
  }
 
 function updateShop(req, res) {
-    let Shop = require("../models/shop");
+    let Shop = require("../models/Shop");
 
     Shop.findByIdAndUpdate({_id: req.params.id}, 
-        {name : req.body.name, 
-        category : req.body.category}, 
+        {name : req.body.name}, 
         {new : true})
     .then((updatedShop) => {
         res.status(200).json(updatedShop);
@@ -53,7 +52,7 @@ function updateShop(req, res) {
 }
 
 function deleteShop(req, res) {
-    let Shop = require("../models/shop");
+    let Shop = require("../models/Shop");
 
     Shop.findOneAndRemove({_id : req.params.id})
     .then((deletedShop) => {
@@ -64,7 +63,7 @@ function deleteShop(req, res) {
  }
 
 function done(req, res) {
-    let Shop = require("../models/shop");
+    let Shop = require("../models/Shop");
 
     Shop.findByIdAndUpdate({_id: req.params.id}, 
         {done : true}, 
@@ -77,7 +76,7 @@ function done(req, res) {
 }
 
 function undone(req, res) {
-    let Shop = require("../models/shop");
+    let Shop = require("../models/Shop");
 
     Shop.findByIdAndUpdate({_id: req.params.id}, 
         {done : false}, 
